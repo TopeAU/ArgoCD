@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rdicidr
+  namespace: production
+  labels:
+    app: rdicidr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rdicidr
+  template:
+    metadata:
+      labels:
+        app: rdicidr
+    spec:
+      containers:
+      - name: rdicidr
+        image: sudhanlogics/fsl-prod
+        ports:
+        - containerPort: 80
+        env: 
+        - name: MY_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: rdicidr
+              key: password
